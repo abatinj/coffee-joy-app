@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function POSPage() {
-  const router = useRouter();
   const [menus, setMenus] = useState([]);
   const [cart, setCart] = useState([]);
   const [category, setCategory] = useState('Signature');
@@ -87,13 +86,22 @@ export default function POSPage() {
     <div className="flex h-screen bg-[#F9F7F4] font-sans">
       {/* SIDEBAR */}
       <div className="w-20 bg-white border-r flex flex-col items-center py-4 shadow-sm">
-        <div className="text-center font-bold mb-8 text-[#5D4037] text-sm cursor-pointer" onClick={() => router.push('/')}>☕ C&J</div>
+        <Link href="/" className="text-center font-bold mb-8 text-[#5D4037] text-sm cursor-pointer">
+          ☕ C&J
+        </Link>
         <div className="flex flex-col gap-6 text-gray-400">
-          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/dashboard')}>🏠</div>
-          <div className="text-[#5D4037] border-l-4 border-[#5D4037] pl-2 cursor-pointer">🍽️</div>
-          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/inventory')}>📦</div>
-          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/report')}>📊</div>
-          <button onClick={() => router.push('/')} className="mt-auto cursor-pointer hover:text-[#5D4037]">🚪</button>
+          <Link href="/admin/dashboard" className="cursor-pointer hover:text-[#5D4037]">
+            🏠
+          </Link>
+          <Link href="/admin/inventory" className="cursor-pointer hover:text-[#5D4037]">
+            📦
+          </Link>
+          <Link href="/admin/report" className="cursor-pointer hover:text-[#5D4037]">
+            📊
+          </Link>
+          <Link href="/" className="mt-auto cursor-pointer hover:text-[#5D4037]">
+            🚪
+          </Link>
         </div>
       </div>
 

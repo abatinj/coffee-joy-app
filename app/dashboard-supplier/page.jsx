@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function SupplierDashboard() {
-  const router = useRouter();
   const [supplierId, setSupplierId] = useState(null);
   const [orders, setOrders] = useState([]);
   const [catalogue, setCatalogue] = useState([]);
@@ -78,7 +77,7 @@ export default function SupplierDashboard() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push('/login-supplier');
+    window.location.href = '/login-supplier';
   };
 
   if (loading) return <div className="p-10 text-center">Loading Supplier Dashboard...</div>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { Line } from 'react-chartjs-2';
 import {
@@ -18,7 +18,6 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function AdminDashboard() {
-  const router = useRouter();
   const [stats, setStats] = useState({ 
     salesToday: 0, 
     totalEarnings: 0, 
@@ -77,75 +76,37 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex h-screen bg-[#F9F7F4]">
-      {/* --- SIDEBAR --- */}
+      {/* SIDEBAR */}
       <div className="w-20 bg-white border-r flex flex-col items-center py-4 shadow-sm">
-        <div 
-          className="text-center font-bold mb-8 text-[#5D4037] text-sm cursor-pointer" 
-          onClick={() => router.push('/')}
-        >
+        <Link href="/" className="text-center font-bold mb-8 text-[#5D4037] text-sm cursor-pointer">
           ☕ C&J
-        </div>
-        
+        </Link>
         <div className="flex flex-col gap-6 text-gray-400">
-          {/* Home / Dashboard - Ini yang diperbaiki */}
-          <div 
-            className="text-[#5D4037] border-l-4 border-[#5D4037] pl-2 cursor-pointer"
-            onClick={() => router.push('/admin/dashboard')}
-          >
+          <Link href="/admin/dashboard" className="text-[#5D4037] border-l-4 border-[#5D4037] pl-2 cursor-pointer">
             🏠
-          </div>
-
-          {/* POS */}
-          <div 
-            className="cursor-pointer hover:text-[#5D4037]" 
-            onClick={() => router.push('/admin/pos')}
-          >
+          </Link>
+          <Link href="/admin/pos" className="cursor-pointer hover:text-[#5D4037]">
             🍽️
-          </div>
-
-          {/* Inventory */}
-          <div 
-            className="cursor-pointer hover:text-[#5D4037]" 
-            onClick={() => router.push('/admin/inventory')}
-          >
+          </Link>
+          <Link href="/admin/inventory" className="cursor-pointer hover:text-[#5D4037]">
             📦
-          </div>
-
-          {/* Supplier */}
-          <div 
-            className="cursor-pointer hover:text-[#5D4037]" 
-            onClick={() => router.push('/admin/supplier')}
-          >
+          </Link>
+          <Link href="/admin/supplier" className="cursor-pointer hover:text-[#5D4037]">
             📄
-          </div>
-
-          {/* Orders */}
-          <div 
-            className="cursor-pointer hover:text-[#5D4037]" 
-            onClick={() => router.push('/admin/orders')}
-          >
+          </Link>
+          <Link href="/admin/orders" className="cursor-pointer hover:text-[#5D4037]">
             📋
-          </div>
-
-          {/* Report */}
-          <div 
-            className="cursor-pointer hover:text-[#5D4037]" 
-            onClick={() => router.push('/admin/report')}
-          >
+          </Link>
+          <Link href="/admin/report" className="cursor-pointer hover:text-[#5D4037]">
             📊
-          </div>
-
-          {/* Logout */}
-          <button 
-            onClick={() => router.push('/')} 
-            className="mt-auto cursor-pointer hover:text-[#5D4037]"
-          >
+          </Link>
+          <Link href="/" className="mt-auto cursor-pointer hover:text-[#5D4037]">
             🚪
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* --- CONTENT (Dashboard) --- */}
+      {/* CONTENT */}
       <div className="flex-1 p-8 overflow-y-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-black">Hello, Admin!</h1>
