@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function POSPage() {
+  const router = useRouter();
   const [menus, setMenus] = useState([]);
   const [cart, setCart] = useState([]);
   const [category, setCategory] = useState('Signature');
   const [loading, setLoading] = useState(false);
 
-  // Fetch menu dari Sup    abase
   useEffect(() => {
     fetchMenus();
   }, [category]);
@@ -23,7 +24,6 @@ export default function POSPage() {
     setLoading(false);
   };
 
-  // Tambah item ke keranjang
   const addToCart = (item) => {
     setCart(prev => {
       const existing = prev.find(i => i.id_menu === item.id_menu);
@@ -34,15 +34,12 @@ export default function POSPage() {
     });
   };
 
-  // Hapus item dari keranjang
   const removeFromCart = (id_menu) => {
     setCart(prev => prev.filter(item => item.id_menu !== id_menu));
   };
 
-  // Total harga
   const totalPrice = cart.reduce((acc, item) => acc + item.harga_menu * item.quantity, 0);
 
-  // Print bill (simpan ke database + reset keranjang)
   const handlePrintBill = async () => {
     if (cart.length === 0) {
       alert('Keranjang kosong!');
@@ -62,7 +59,6 @@ export default function POSPage() {
 
       if (transaksiError) throw transaksiError;
 
-      // Simpan detail item
       const detailItems = cart.map(item => ({
         id_transaksi_offline: idTransaksi,
         id_menu: item.id_menu,
@@ -85,35 +81,33 @@ export default function POSPage() {
     }
   };
 
-  // Daftar kategori (sesuai Page 10)
   const categories = ['Signature', 'Espresso Based', 'Manual Brew', 'Non Coffee', 'Food', 'Snacks', 'Dimsum'];
 
   return (
     <div className="flex h-screen bg-[#F9F7F4] font-sans">
-      {/* --- SIDEBAR KIRI --- */}
+      {/* SIDEBAR */}
       <div className="w-20 bg-white border-r flex flex-col items-center py-4 shadow-sm">
-        <div className="text-center font-bold mb-8 text-[#5D4037] text-sm">☕ C&J</div>
+        <div className="text-center font-bold mb-8 text-[#5D4037] text-sm cursor-pointer" onClick={() => router.push('/')}>☕ C&J</div>
         <div className="flex flex-col gap-6 text-gray-400">
-          <div className="cursor-pointer hover:text-[#5D4037]">🏠</div>
+          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/dashboard')}>🏠</div>
           <div className="text-[#5D4037] border-l-4 border-[#5D4037] pl-2 cursor-pointer">🍽️</div>
-          <div className="cursor-pointer hover:text-[#5D4037]">📦</div>
-          <div className="cursor-pointer hover:text-[#5D4037]">📊</div>
-          <button onClick={() => window.location.href='/'} className="mt-auto cursor-pointer hover:text-[#5D4037]">🚪</button>
+          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/inventory')}>📦</div>
+          <div className="cursor-pointer hover:text-[#5D4037]" onClick={() => router.push('/admin/report')}>📊</div>
+          <button onClick={() => router.push('/')} className="mt-auto cursor-pointer hover:text-[#5D4037]">🚪</button>
         </div>
       </div>
 
-      {/* --- TENGAH: MENU GRID --- */}
+      {/* CONTENT */}
       <div className="flex-1 p-6 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-4">Choose Category</h1>
         
-        {/* Filter Kategori */}
         <div className="flex gap-4 mb-6 overflow-x-auto">
           {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}
               className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                category === cat ? 'bg-[#5D4037] text-white' : 'bg-white text-[#5D4037]'
+                category === cat ? 'bg-[#5D4037] text-white' : 'bg-white text-black'
               }`}
             >
               {cat}
@@ -123,7 +117,6 @@ export default function POSPage() {
 
         <h2 className="text-xl font-semibold mb-4">{category}</h2>
 
-        {/* Grid Menu */}
         {loading ? (
           <div className="text-center py-10">Loading menu...</div>
         ) : (
@@ -131,7 +124,7 @@ export default function POSPage() {
             {menus.map(item => (
               <div key={item.id_menu} className="bg-white p-4 rounded-xl shadow-sm border hover:shadow-md transition">
                 <h3 className="font-bold text-lg">{item.nama_menu}</h3>
-                <p className="text-[#5D4037] font-medium">Rp {item.harga_menu.toLocaleString()}</p>
+                <p className="text-black font-medium">Rp {item.harga_menu.toLocaleString()}</p>
                 <button
                   onClick={() => addToCart(item)}
                   className="mt-3 bg-[#5D4037] text-white w-10 h-10 rounded-full flex items-center justify-center text-xl hover:bg-[#3E2723] transition"
@@ -144,7 +137,7 @@ export default function POSPage() {
         )}
       </div>
 
-      {/* --- KANAN: KERANJANG (CURRENT ORDERS) --- */}
+      {/* CART */}
       <div className="w-80 bg-[#DCD3C6] p-6 flex flex-col">
         <h2 className="text-xl font-bold mb-1">Current Orders</h2>
         <p className="text-sm text-gray-600 mb-4">Offline Customer</p>
@@ -177,7 +170,7 @@ export default function POSPage() {
           </button>
           <button
             onClick={() => setCart([])}
-            className="w-full bg-white text-[#5D4037] py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
+            className="w-full bg-white text-black py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
           >
             Clear Bill
           </button>

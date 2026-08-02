@@ -1,3 +1,4 @@
+// Redeploy trigger
 "use client";
 
 import { useEffect } from 'react';
