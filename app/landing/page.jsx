@@ -8,7 +8,6 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9F7F4]">
       <div className="text-center max-w-2xl">
-        {/* Logo Besar */}
         <div className="flex flex-col items-center mb-8">
           <div className="w-32 h-44 bg-[#3E2723] rounded-full mx-auto relative mb-6 shadow-lg">
             <div className="w-2 h-44 bg-white/20 absolute left-1/2 -ml-1 rounded-full transform rotate-6"></div>
@@ -26,7 +25,6 @@ export default function LandingPage() {
           <p className="text-sm text-gray-500 tracking-widest">YOU'LL KNOW WHEN YOU ENJOY</p>
         </div>
 
-        {/* Tombol Masuk */}
         <button
           onClick={() => router.push('/role')}
           className="mt-10 bg-[#5D4037] text-white px-12 py-4 rounded-full text-xl font-semibold hover:bg-[#3E2723] transition duration-300 shadow-lg"

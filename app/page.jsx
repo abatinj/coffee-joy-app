@@ -24,7 +24,6 @@ export default function LoginPage() {
 
       if (authError) throw authError;
 
-      // Ambil role user dari tabel users_profile
       const { data: profile, error: profileError } = await supabase
         .from('users_profile')
         .select('role')
@@ -33,7 +32,6 @@ export default function LoginPage() {
 
       if (profileError) throw profileError;
 
-      // Arahkan ke Role Selection
       router.push('/role');
 
     } catch (err) {
@@ -46,7 +44,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F9F7F4]">
       <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-md">
-        
         <div className="flex flex-col items-center mb-8">
           <h1 className="text-3xl font-bold text-[#3E2723] tracking-wider">COFFEE AND JOY</h1>
           <p className="text-xs text-gray-400 tracking-widest mt-1">YOU'LL KNOW WHEN YOU ENJOY</p>
