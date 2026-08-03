@@ -25,12 +25,12 @@ export default function LandingPage() {
           <p className="text-sm text-gray-500 tracking-widest">YOU'LL KNOW WHEN YOU ENJOY</p>
         </div>
 
-        <button
-          onClick={() => router.push('/role')}
-          className="mt-10 bg-[#5D4037] text-white px-12 py-4 rounded-full text-xl font-semibold hover:bg-[#3E2723] transition duration-300 shadow-lg"
-        >
-          Start Application
-        </button>
+       <button
+  onClick={() => router.push('/login')}
+  className="mt-10 bg-[#5D4037] text-white px-12 py-4 rounded-full text-xl font-semibold hover:bg-[#3E2723] transition duration-300 shadow-lg"
+>
+  Start Application
+</button>
       </div>
     </div>
   );
